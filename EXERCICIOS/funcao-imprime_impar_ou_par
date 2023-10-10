@@ -1,0 +1,70 @@
+# escreva uma funcao que verifica se um numero inteiro é impar ou par
+# FUNCAO EM C: 
+# int impar_par(int variavel){
+#	if(variavel % 2 = 0){
+#		return 0; |	 par
+#	else{
+#		return 1; | 	impar
+#	}
+#}
+
+#FUNCAO EM ASSEMBLE MIPS:
+
+.data
+	msg: .asciiz "DIGITE UM NUMERO INTEIRO: "
+	impar: .asciiz "O NÚMERO É IMPAR"
+	par: .asciiz "O NÚMERO É PAR"
+.text
+	# MENSAGEM AO ÚSUARIO
+	li $v0, 4
+	la $a0, msg
+	syscall
+	
+	#PEDE UM NUMERO INTEIRO PARA O USUARIO
+	li $v0, 5		# le um inteiro
+	syscall			# $a0 = valor_lido;
+	move $a0, $v0
+	jal impar_par 		#impar_par(num)
+	
+	move $t3, $v0	
+	move $t0, $zero
+
+
+	beq $t3, $t0, mensagem_par
+	
+	# mensagem se o numero for impar
+	
+	li $v0, 4
+	la $a0, impar
+	syscall
+	
+	# termina o programa
+	li $v0, 10
+	syscall
+	
+# Se o numero foi par
+	mensagem_par:
+		li $v0, 4
+		la $a0, par
+		syscall
+		
+		li $v0, 10
+		syscall
+		
+impar_par:
+		li $t0, 2 			# t0 = 2
+		div $a0, $t0			# num / 2
+		
+		move $t2, $zero			# t2 = 0;
+		
+		mfhi $t1			# t1 = num % 2;
+		beq $t1, $t2, num_par	# if( t1 == t2) 
+		#SE IMPAR = 1
+		li $v0, 1
+		jr $ra
+			# SE PAR = 0
+			num_par:
+				li $v0, 0
+				jr $ra
+					
+

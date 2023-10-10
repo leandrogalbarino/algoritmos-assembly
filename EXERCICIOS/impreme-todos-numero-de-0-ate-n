@@ -1,0 +1,67 @@
+# Escreva um programa que lê um número inteiro positivo e imprime todos os números inteiros de zero até o número lido 
+#--------------------------------
+# PROGRAMA EM C:
+#	int i = 0;
+#	int numero_lido = 0;
+#	scanf("%d", num)
+#	while(i > número lid	o)
+#	{
+#		printf("%d", i);
+#		i++;
+#	}
+#--------------------------------
+# PROGRAMA EM ASSEMBLE MIPS.
+.data
+#	MENSAGENS AO ÚSUARIO.
+	msg: .asciiz "POR FAVOR, DIGITE UM NUMERO: "
+	espaco_branco: .byte ' '
+	nova_linha: .byte '\n'
+	terminou: .asciiz "O PROGRAMA TERMINOU SUA IMPRESSAO"
+	
+.text
+	# mensagem ao usuario
+	li, $v0, 4
+	la $a0, msg
+	syscall
+	
+	# pede número ao úsuario
+	li, $v0, 5 			# leitura de um int
+	syscall
+	
+	move $t0, $v0 			# move v0 para t0 
+	move $t1, $zero 		# atribui 0 a t1
+	
+	# laço de repiticao
+	while:
+		bgt $t1, $t0, stop	#comparacao, se i >= num; sai do loop
+		move $a0, $t1 		#move t1 para v0;
+		li $v0, 1		#imprime um inteiro;
+		syscall	 		# printf;
+		
+		#NOVA LINHA:
+		li, $v0, 11
+		lb, $a0, espaco_branco
+		syscall
+		
+		addi $t1, $t1, 1 	# i++;
+
+		j while			# volta para o while;
+	stop:
+		# nova linha
+		li $v0, 11
+		lb $a0, nova_linha
+		syscall
+		
+		# mensagem ao usuario
+		li, $v0, 4
+		la $a0, terminou
+		syscall
+		
+		li, $v0, 10		#termina a execução
+		syscall
+		
+	
+	
+	
+	
+	

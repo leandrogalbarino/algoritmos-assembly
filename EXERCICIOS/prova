@@ -1,0 +1,64 @@
+.data 
+	x: .space 4
+	y: .space 4
+.text
+	li $t0, 7
+	li $t1, 5
+	sw $t0, x
+	sw $t1, y
+	
+	lw $a0, x
+	lw $a1, y
+	jal P1
+	
+	li $a0, 10
+	syscall
+P3:
+	move $t0, $zero
+	li $t1, 3
+	
+	addi $sp, $sp, -12  # Deslocamento da pilha para acomodar a[0], a[1] e a[2]
+	for:
+		beq $t0, $t1, sair
+		lw $t1, $a0
+		lw $t2, $a1
+		add $t3, $t1, $t2
+		add $t3, $t3, $t0
+		
+		sw $t3, 0($sp) 
+		addi $t0, $t0, 1 	# i++
+		addi $sp, $sp, 4
+		j for
+	
+	sair:
+	addi $sp, $sp, -12
+	li $t1, 0($sp)
+	addi $sp, $sp, 4
+	li $t2, 0($sp)
+	addi $sp, $sp, 4
+	
+	add $t3, $t2, $t1
+	sw $t3, 0($sp)
+	
+	lw $t4, 0($sp)
+	move $v0, $t4
+	jr $ra
+P2:
+	sw $t0, $a0
+	sw $t1, $a1
+	jal P3
+	move $t0, $a0
+	addi $t1, $t1, 1
+	add $t0, $t0, $t1
+	jr $ra
+P1:
+	sw $t0, $a0
+	sw $t1, $a1
+	jal P2
+	move $t0, $a0
+	add $t2, $t1, $t0
+	jr $ra
+
+
+
+
