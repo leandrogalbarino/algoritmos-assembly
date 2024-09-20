@@ -50,7 +50,7 @@ Em MIPS, os registradores são utilizados para armazenar dados temporários e in
 
 ## Como Executar
 
-Para executar os exemplos de Assembly MIPS, você pode usar o simulador[MARS](http://courses.missouristate.edu/KenVollmar/MARS/), que é uma ferramenta popular para simulação de código MIPS.
+Para executar os exemplos de Assembly MIPS, você pode usar o simulador [MARS](http://courses.missouristate.edu/KenVollmar/MARS/), que é uma ferramenta popular para simulação de código MIPS.
 
 ### Passos:
 
